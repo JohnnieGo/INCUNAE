@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'Aletheia Sans';
+    src: url('AletheiaSans.woff2') format('woff2'),
+        url('AletheiaSans.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Aletheia Sans';
+    src: url('AletheiaSans.woff2') format('woff2'),
+        url('AletheiaSans.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
