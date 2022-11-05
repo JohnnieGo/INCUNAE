@@ -40,21 +40,19 @@ function redoChange() {
 
 function intelligentCorrect() {
         const toChange = this.quill.getContents().ops[0].insert
-            .replace(/\s\/|\//g, ",")
+            .replaceAll(/\s\/|\//g, ",")
             .replaceAll("ſſ", "sz")
-            .replace(/\ſ/g, "s")
-            .replace(/\ꝛ/g, "r")
-            .replace(/\ö|\ö|\ð|\óͤ|\óͤ|\oͤ/g, "ó")
-            .replace(/\ä|\aͤ|\ã/g, "á")
-            .replace(/\ß/g, "sz")
-            .replace(/[v]|\ü|\ů/g, "u")
-            .replace(/[V]|\ü/g, "U")
-            .replace(/\ʒ/g, "z")
-            .replace(/\ẽ/g, "é")
-            .replace(/\⸗/g, "-")
-            .replace(/\ ᷣ/g, " ")
-            .replace(/\é/g, "c")
-            .replace(/\é/g, "c")
+            .replaceAll(/\ſ/g, "s")
+            .replaceAll(/\ꝛ/g, "r")
+            .replaceAll(/\ö|\ö|\ð|\óͤ|\óͤ|\oͤ|\òͤ/g, "ó")
+            .replaceAll(/\ä|\aͤ|\ã/g, "á")
+            .replaceAll(/\ß/g, "sz")
+            .replaceAll(/[v]|\ü|\ů/g, "u")
+            .replaceAll(/[V]|\ü/g, "U")
+            .replaceAll(/\ʒ/g, "z")
+            .replaceAll(/\ẽ/g, "é")
+            .replaceAll(/\⸗/g, "-")
+            .replaceAll(/\ ᷣ/g, " ")
 
        this.quill.setContents([{insert: toChange}])
 }
