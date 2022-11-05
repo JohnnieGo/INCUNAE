@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/INCUNAE/static/css/main.b6189f28.css",
+    "main.js": "/INCUNAE/static/js/main.31ac0cb7.js",
+    "static/js/787.28cb0dcd.chunk.js": "/INCUNAE/static/js/787.28cb0dcd.chunk.js",
+    "static/media/DecoratedRomanInitials.woff": "/INCUNAE/static/media/DecoratedRomanInitials.3863c804606924093b32.woff",
+    "static/media/DecoratedRomanInitials.woff2": "/INCUNAE/static/media/DecoratedRomanInitials.164d7c9a4a295b6bfe33.woff2",
+    "index.html": "/INCUNAE/index.html",
+    "main.b6189f28.css.map": "/INCUNAE/static/css/main.b6189f28.css.map",
+    "main.31ac0cb7.js.map": "/INCUNAE/static/js/main.31ac0cb7.js.map",
+    "787.28cb0dcd.chunk.js.map": "/INCUNAE/static/js/787.28cb0dcd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b6189f28.css",
+    "static/js/main.31ac0cb7.js"
+  ]
+}
