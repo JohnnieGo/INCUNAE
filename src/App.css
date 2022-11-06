@@ -30,19 +30,18 @@ h1, h4{
   margin: 0;
 }
 
+sub{
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.5rem;
+  vertical-align: -25%;
+}
+
 .hide {
   transition: opacity 0.5s ease-out;
   opacity: 0;
 }
 
-#toolbar{
-  font-family: 'Libre Baskerville', serif;
-}
 
-.output-text-field{
-  font-family: 'Libre Baskerville', serif;
-  max-width: 100%;
-}
 
 #root{
   height: 100%;
@@ -67,6 +66,8 @@ h1, h4{
 
 .main-grid-no-left-column{
   grid-template-columns: .2fr 4fr 4fr;
+  grid-template-rows: 2fr 7fr 1fr;
+
 }
 
 .main div{
@@ -75,10 +76,11 @@ h1, h4{
 }
 
 .main-header{
+  width: 100%;
   grid-column: 1 / -1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   position: relative;
 }
 
@@ -88,18 +90,26 @@ h1, h4{
   margin: 0;
 }
 
-.main-share, .main-get-help {
-  flex-grow: 1;
-  flex-basis: 0;
-  cursor: pointer;
-  width: fit-content;
+.main-share{
+  position: absolute;
+  left: 0;
 }
 
-.main-get-help{
+.main-header-right{
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  position: absolute;
+  right: 0;
 }
 
+.main-change-background{
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+}
 
 .main-progress-line{
   border: 4px black solid;
@@ -137,25 +147,59 @@ h1, h4{
   white-space: pre-wrap;
   line-height: 2rem;
   position: relative;
-}
-
-.output-text-input{
-  width: 100%;
-  height: 400px;
+  height: 100%;
+  overflow: hidden;
 }
 
 .output-container{
   width: 100%;
+  height: 100%;
 }
+
+.quil-toolbar-quill{
+  height: 100%;
+  display:flex;
+  flex-direction:column;
+}
+
+#toolbar{
+  font-family: 'Libre Baskerville', serif;
+  flex: 0 1 auto
+}
+
+.output-text-field{
+  font-family: 'Libre Baskerville', serif;
+  flex: 0 1  auto;
+  overflow: hidden;
+}
+/* .output-text-input{
+  width: 100%;
+  height: 400px;
+} */
+
+
 
 .main-right-column{
   grid-column: 3 / 4;
   position: relative;
+  overflow: hidden;
 }
 
 .react-transform-wrapper{
-  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
   right: 0px;
+}
+
+.react-transform-wrapper{
+  overflow: hidden;
+}
+
+.react-transform-component{
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .image-transform-wrapper-tools{
@@ -186,10 +230,13 @@ h1, h4{
   margin-left: auto;
 }
 
-.help-container{
+.info-container{
   grid-column: 2 / 4;
   grid-row: 2/3;
   padding-right: 20%;
+  height: 100%;
+  position: relative;
+  overflow: auto;
 }
 
 .input-container{
@@ -197,17 +244,22 @@ h1, h4{
 }
 
 .input-picture{
-  width: 100%;
-  max-height: 70vh;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+
   /* border: 1px black solid; */
 }
 
 input[name="inputPhoto"] {
   width: 100%;
+  z-index: 1;
 }
-/* .ql-container {
-  font-size: 30px;
-} */
+
+.ql-editor{
+  overflow: auto;
+}
+
 
 
 select {
@@ -273,7 +325,7 @@ select::-ms-expand {
 }
 
 .input-message{
-  z-index: -1;
+  z-index: 0;
   position: absolute;
   text-align: center;
 }
@@ -311,3 +363,24 @@ select::-ms-expand {
   -ms-user-select: none;
   user-select: none;
 }
+
+
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #000000 transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border-radius: 0px;
+    border: 2px solid transparent;
+  }
+

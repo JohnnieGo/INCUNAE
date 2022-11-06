@@ -3,12 +3,16 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import '../App'
 
 export default function ImageDisplay(props){
+
     return (
         // <div className="image-display">
             <TransformWrapper
                 initialScale={1}
                 initialPositionX={0}
                 initialPositionY={0}
+                // limitToBounds={false}
+                centerZoomedOut={true}
+                zoomAnimation={true}
                 >
                 {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                 <React.Fragment > 

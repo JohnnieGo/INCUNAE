@@ -3,13 +3,11 @@ import { createWorker } from 'tesseract.js';
 import InputImage from './components/InputImage'
 import OutputText from './components/OutputText'
 import ImageDisplay from './components/ImageDisplay'
-import HelpComponent from './components/HelpComponent'
+import InfoComponent from './components/InfoComponent'
 
-// import frak2021 from '../frak2021_1.069'
 
 import './App.css';
-// import '../node_modules/react-grid-layout/css/styles'
-// import '../node_modules/react-resizable/css/styles'
+
 
 function App() {
 
@@ -19,8 +17,23 @@ function App() {
   const [inputData, setInputData] = useState({isDragged: false, isHovered: true, isProcessing: false})
   const [progress, setProgress] = useState(0)
   const [isInputAreaShown, setIsInputAreaShown] = useState(true)
-  const [isHelpShown, setIsHelpShown] = useState(false)
-  // const [quillData, setQuillData] = useState()
+  const [isHelpShown, setIsHelpShown] = useState(true)
+  const [themeData, setThemeData] = useState({currentColor: "#FFF6E6", nextColor: "#F5F5F5"})
+
+  // console.log(themeData)
+  function changeThemeData(){
+    const colors = ["#FFF6E6", "#F5F5F5", "#FFFFFF"]
+    const currentColorIndex = colors.indexOf(themeData.currentColor)
+    if (currentColorIndex === colors.length - 1){
+      setThemeData({currentColor: colors[0], nextColor: colors[1]})
+    } else if (currentColorIndex === colors.length - 2){
+      setThemeData({currentColor: colors[colors.length - 1], nextColor: colors[0]})
+    } else {
+      setThemeData({currentColor: colors[currentColorIndex + 1], nextColor: colors[currentColorIndex + 2]})
+    }
+    console.log(themeData.currentColor)
+    console.log(themeData.nextColor)
+  } 
 
   function setInputDataWithAProp(key, val){
     setInputData((prevInputData) => {
@@ -30,7 +43,7 @@ function App() {
   }
 
   const languagesAPI = 'https://raw.githubusercontent.com/JohnnieGo/INCUNAE/main/tess-trainedata' 
-  console.log(languagesAPI)
+
   const worker = createWorker({
     logger: m => {
       setProgress(parseInt(m.progress * 100))},
@@ -48,7 +61,6 @@ function App() {
       tessjs_create_hocr: "'1",
     });  
     const { data } = await worker.detect(imageData);
-    console.log(data)
     const { data: { text } } = await worker.recognize(imageData);
     setOcr(text);
     setInputDataWithAProp("isProcessing", false)
@@ -63,7 +75,6 @@ function App() {
 
   async function handleImageChange(data){
     const file = data.target.files[0];
-    console.log(file)
     const reader = new FileReader();
     reader.onloadend = () => {
       const imageDataUri = reader.result;
@@ -73,7 +84,6 @@ function App() {
   }
 
   function handleLanguageChange(event) {
-    console.log(imageData)
     setLanguageData(event.target.value)
     if (imageData){doOCR()}
   }
@@ -107,15 +117,22 @@ function App() {
     setIsInputAreaShown(prev => !prev)
   }
 
-  console.log("APP.js zmiana")
+  function setHelp() {
+    setIsHelpShown((prev)=>!prev)
+    console.log(isHelpShown)
+  }
+
   return (
-    <main className={`main ${isInputAreaShown ? "" : "main-grid-no-left-column"}`}>
-      <div className='main-header'>
+    <main className={`main colorWhite ${isInputAreaShown ? "" : "main-grid-no-left-column"}`} style={{backgroundColor: themeData.currentColor}}>
+      <div className='main-header no_highlights'>
         <h3 className='main-share'>Udostępnij</h3>
-        <p className='main-logo'>incunae</p>
-        <h1 className='main-get-help'>?</h1>
+        <span className='main-logo'>incunae<sub>beta</sub></span>
+        <div className='main-header-right'>
+          <span className='main-change-background' onClick={changeThemeData} style={{backgroundColor: themeData.nextColor}}></span>
+          <h1 className='main-get-help' onClick={setHelp}>?</h1>
+        </div>
       </div>
-      <div className='main-left-column'>
+      <div className='main-left-column no_highlights'>
         <h3 onClick={setInputAreaDisplay}className={`left-column-show-hide no_highlights ${imageData ? "show-left-column" : "hide"}`}>{isInputAreaShown ? "Schowaj panel" : "Pokaż panel"}</h3>
         {isInputAreaShown && <div className=''>
           <h1>Wybierz model:</h1>
@@ -126,6 +143,7 @@ function App() {
               value={languageData}
               onChange={handleLanguageChange}
               name="languageData"
+              style={{backgroundColor: themeData.currentColor}}
           >
             <optgroup label="Fraktura i gotyk">
               <option value="frak2021_1.069">frak2021_1.069</option>
@@ -149,20 +167,19 @@ function App() {
       {imageData && <div className='main-middle-column'>
         <div className='output-container'>
           <OutputText ocr={ocr}/>
-          {/* <MyComponent ocr={ocr}/> */}
-          {/* <button onClick={doOCR}>Run</button> */}
+
         </div>
       </div>}
       {imageData && <div className='main-right-column'>
-          {/* <img className={imageData ? 'input-picture' : undefined} src={imageData} alt="" /> */}
           {imageData && <ImageDisplay imageData={imageData}/>}
       </div>}
       <div className='main-footer'>
         {inputData.isProcessing ? <h5>{progress}%</h5> : undefined}
-        <h4 className="footer-text">Jan Żaborowski, Kraków 2022 halko</h4>
+        <h4 className="footer-text">{"Laura <3"}</h4>
         {inputData.isProcessing ? <hr className='main-progress-line' style={{width: `${progress}%`}}/> : undefined}
       </div>
-      {imageData ? undefined : <HelpComponent/>}
+      {imageData ? undefined : <InfoComponent/>}
+      {/* {!isHelpShown ? undefined : <InfoComponent/>} */}
     </main>
   );
 

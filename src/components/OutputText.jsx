@@ -9,6 +9,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import QuillToolbar, { modules, formats } from "../components/QuillToolbar";
+
 import 'react-quill/dist/quill.snow.css';
 import '../App'
 
@@ -22,9 +23,9 @@ export default function OutputText(props){
             setValue(ocrText);
           }, [props.ocr]);
         return(
-            <div>
-            <QuillToolbar/>
-            <ReactQuill theme="snow" onChange={setValue} value={value} readOnly={false}  modules={modules} formats={formats} className={"output-text-field"}/>
+            <div className='quil-toolbar-quill'>
+              <QuillToolbar/>
+              <ReactQuill theme="snow" onChange={setValue} value={value} readOnly={false}  modules={modules} formats={formats} className={"output-text-field"}/>
             </div>
         )
     }
