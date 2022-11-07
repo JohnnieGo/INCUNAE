@@ -4,6 +4,8 @@ import InputImage from './components/InputImage'
 import OutputText from './components/OutputText'
 import ImageDisplay from './components/ImageDisplay'
 import InfoComponent from './components/InfoComponent'
+import HelpComponent from './components/HelpComponent'
+import { CSSTransition } from "react-transition-group";
 
 
 import './App.css';
@@ -17,10 +19,9 @@ function App() {
   const [inputData, setInputData] = useState({isDragged: false, isHovered: true, isProcessing: false})
   const [progress, setProgress] = useState(0)
   const [isInputAreaShown, setIsInputAreaShown] = useState(true)
-  const [isHelpShown, setIsHelpShown] = useState(true)
+  const [isHelpShown, setIsHelpShown] = useState(false)
   const [themeData, setThemeData] = useState({currentColor: "#FFF6E6", nextColor: "#F5F5F5"})
 
-  // console.log(themeData)
   function changeThemeData(){
     const colors = ["#FFF6E6", "#F5F5F5", "#FFFFFF"]
     const currentColorIndex = colors.indexOf(themeData.currentColor)
@@ -119,15 +120,40 @@ function App() {
 
   function setHelp() {
     setIsHelpShown((prev)=>!prev)
-    console.log(isHelpShown)
   }
 
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "INCUNAE",
+          text: "Narzędzie do transkrypcji dawnych tekstów online.",
+          url: "https://johnniego.github.io/INCUNAE/",
+        })
+        .then(() => {
+          console.log("Wysłano");
+        })
+        .catch((error) => {
+          console.error("Ups... Coś poszło nie tak.", error);
+        });
+    }
+  };
+
+  const nodeRef = React.useRef(null)
+
   return (
-    <main className={`main colorWhite ${isInputAreaShown ? "" : "main-grid-no-left-column"}`} style={{backgroundColor: themeData.currentColor}}>
+    <CSSTransition
+    in
+    classNames="fade"
+    appear={true}
+    timeout={500}
+    nodeRef={nodeRef}
+    >
+    <main ref={nodeRef} className={`main colorWhite ${isInputAreaShown ? "" : "main-grid-no-left-column"}`} style={{backgroundColor: themeData.currentColor}}>
       <div className='main-header no_highlights'>
-        <h3 className='main-share'>Udostępnij</h3>
+        <h3 className='main-share' onClick={handleShare}>Udostępnij</h3>
         <span className='main-logo'>incunae<sub>beta</sub></span>
-        <div className='main-header-right'>
+        <div className='main-header-right-elements'>
           <span className='main-change-background' onClick={changeThemeData} style={{backgroundColor: themeData.nextColor}}></span>
           <h1 className='main-get-help' onClick={setHelp}>?</h1>
         </div>
@@ -151,11 +177,11 @@ function App() {
               <option value="GT4HistOCR">GT4HistOCR</option>
               <option value="Fraktur_50000000">Fraktur_50000000</option>
               <option value="gothall">gothall</option>
+              <option value="frk">frk</option>
+              <option value="ces_frak">ces_frak</option>
             </optgroup>
             <optgroup label="Antykwa">
               <option value="pol">pol</option>
-              <option value="frak2021-0.905">frak2021-0.905</option>
-              <option value="ces_frak">ces_frak</option>
             </optgroup>
           </select>  
           </div>  
@@ -178,9 +204,18 @@ function App() {
         <h4 className="footer-text">{"Laura <3"}</h4>
         {inputData.isProcessing ? <hr className='main-progress-line' style={{width: `${progress}%`}}/> : undefined}
       </div>
-      {imageData ? undefined : <InfoComponent/>}
-      {/* {!isHelpShown ? undefined : <InfoComponent/>} */}
+      {imageData ? undefined : <InfoComponent />}
+      <CSSTransition
+            in={isHelpShown}
+            appear={true}
+            timeout={300}
+            classNames="Animation"
+            unmountOnExit
+        >
+          <HelpComponent color={themeData.currentColor}/>
+        </CSSTransition>
     </main>
+    </CSSTransition>
   );
 
 }

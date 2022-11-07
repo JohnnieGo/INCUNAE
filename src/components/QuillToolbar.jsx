@@ -1,7 +1,11 @@
 import React from "react";
+import * as quillToWord from "quill-to-word";
+import { saveAs } from "file-saver";
+
 import { useState } from "react";
 import { Quill } from "react-quill";
 import '../App';
+
 
 // Custom Undo button icon component for Quill editor. You can import it directly
 // from 'quill/assets/icons/undo.svg' but I found that a number of loaders do not
@@ -30,6 +34,8 @@ const CustomRedo = () => (
 
 const CorrectCharacters = () => <span>Zmień</span>;
 
+const ExportDoc = () => <span>Eksportuj</span>;
+
 // Undo and redo functions for Custom Toolbar
 function undoChange() {
   this.quill.history.undo();
@@ -40,7 +46,7 @@ function redoChange() {
 
 function intelligentCorrect() {
         const toChange = this.quill.getContents().ops[0].insert
-            .replaceAll(" /" || "/", ",")
+            .replaceAll(" /" || "/", ",") 
             .replaceAll("ſſ", "sz")
             .replaceAll("ſ", "s")
             .replaceAll("ꝛ", "r")
@@ -90,7 +96,8 @@ export const modules = {
     handlers: {
       undo: undoChange,
       redo: redoChange,
-      intelligentCorrect: intelligentCorrect
+      intelligentCorrect: intelligentCorrect,
+      exportText: exportText
     }
   },
   history: {
@@ -121,6 +128,15 @@ export const formats = [
   "code-block"
 ];
 
+async function exportText() {
+  const delta = this.quill.getContents();
+  const quillToWordConfig = {
+    exportAs: "blob"
+  };
+  const docAsBlob = await quillToWord.generateWord(delta, quillToWordConfig);
+  saveAs(docAsBlob, "word-export.docx");
+}
+
 // Quill Toolbar component
 export const QuillToolbar = () => (
   <div id="toolbar">
@@ -140,7 +156,10 @@ export const QuillToolbar = () => (
       </button>
       <button className="ql-intelligentCorrect">
         <CorrectCharacters />
-    </button>
+      </button>
+      <button className="ql-exportText">
+        <ExportDoc />
+      </button>
   
     </span>
   </div>
