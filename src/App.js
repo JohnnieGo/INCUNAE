@@ -5,6 +5,7 @@ import OutputText from './components/OutputText'
 import ImageDisplay from './components/ImageDisplay'
 import InfoComponent from './components/InfoComponent'
 import HelpComponent from './components/HelpComponent'
+import HeaderComponent from './components/HeaderComponent'
 import { CSSTransition } from "react-transition-group";
 
 
@@ -23,7 +24,7 @@ function App() {
   const [themeData, setThemeData] = useState({currentColor: "#FFF6E6", nextColor: "#F5F5F5"})
 
   function changeThemeData(){
-    const colors = ["#FFF6E6", "#F5F5F5", "#FFFFFF"]
+    const colors = ["#FFF6E6", "#FFFFFF", "#F5F5F5"]
     const currentColorIndex = colors.indexOf(themeData.currentColor)
     if (currentColorIndex === colors.length - 1){
       setThemeData({currentColor: colors[0], nextColor: colors[1]})
@@ -149,63 +150,62 @@ function App() {
     timeout={500}
     nodeRef={nodeRef}
     >
-    <main ref={nodeRef} className={`main colorWhite ${isInputAreaShown ? "" : "main-grid-no-left-column"}`} style={{backgroundColor: themeData.currentColor}}>
-      <div className='main-header no_highlights'>
-        <h3 className='main-share' onClick={handleShare}>Udostępnij</h3>
-        <span className='main-logo'>incunae<sub>beta</sub></span>
-        <div className='main-header-right-elements'>
-          <span className='main-change-background' onClick={changeThemeData} style={{backgroundColor: themeData.nextColor}}></span>
-          <h1 className='main-get-help' onClick={setHelp}>?</h1>
+      <main ref={nodeRef} className={`main colorWhite ${isInputAreaShown ? "" : "main-grid-no-left-column"}`} style={{backgroundColor: themeData.currentColor}}>
+        
+        <HeaderComponent share={handleShare} change={changeThemeData} help={setHelp} theme={themeData} isHelpShown={isHelpShown}/>
+        
+        <div className='main-left-column no_highlights'>
+          <h3 onClick={setInputAreaDisplay}className={`left-column-show-hide no_highlights ${imageData ? "show-left-column" : "hide"}`}>{isInputAreaShown ? "Schowaj panel" : "Pokaż panel"}</h3>
+          {isInputAreaShown && <div className=''>
+            <h1>Wybierz model:</h1>
+            <div className="select">
+            <select 
+                className='select-model'
+                id="languageData"
+                value={languageData}
+                onChange={handleLanguageChange}
+                name="languageData"
+                style={{backgroundColor: themeData.currentColor}}
+            >
+              <optgroup label="Fraktura i gotyk">
+                <option value="frak2021_1.069">frak2021_1.069 (0.5 MB)</option>
+                <option value="frak2021-09">frak2021-09 (6 MB)</option>
+                <option value="GT4HistOCR">GT4HistOCR (4.5 MB)</option>
+                <option value="Fraktur_50000000">Fraktur_50000000 (8 MB)</option>
+                <option value="frk">frk (30 MB)</option>
+                <option value="Fraktur">Fraktur (10 MB)</option>
+                <option value="ces_frak">ces_frak (0.6 MB)</option>
+              </optgroup>
+              <optgroup label="Antykwa">
+                <option value="pol">pol (25 MB)</option>
+              </optgroup>
+            </select>  
+            </div>  
+            <div className='input-container' onDragEnter={dragEnterInput} onDragLeave={dragExitInput} onMouseEnter={mouseEnterInput} onMouseLeave={mouseExitInput}>
+                <InputImage imageChange={handleImageChange} handleDrop={handleDrop} inputData={inputData}/>
+            </div>
+          </div>}
         </div>
-      </div>
-      <div className='main-left-column no_highlights'>
-        <h3 onClick={setInputAreaDisplay}className={`left-column-show-hide no_highlights ${imageData ? "show-left-column" : "hide"}`}>{isInputAreaShown ? "Schowaj panel" : "Pokaż panel"}</h3>
-        {isInputAreaShown && <div className=''>
-          <h1>Wybierz model:</h1>
-          <div className="select">
-          <select 
-              className='select-model'
-              id="languageData"
-              value={languageData}
-              onChange={handleLanguageChange}
-              name="languageData"
-              style={{backgroundColor: themeData.currentColor}}
-          >
-            <optgroup label="Fraktura i gotyk">
-              <option value="frak2021_1.069">frak2021_1.069</option>
-              <option value="frak2021-09">frak2021-09</option>
-              <option value="GT4HistOCR">GT4HistOCR</option>
-              <option value="Fraktur_50000000">Fraktur_50000000</option>
-              <option value="gothall">gothall</option>
-              <option value="frk">frk</option>
-              <option value="ces_frak">ces_frak</option>
-            </optgroup>
-            <optgroup label="Antykwa">
-              <option value="pol">pol</option>
-            </optgroup>
-          </select>  
-          </div>  
-          <div className='input-container' onDragEnter={dragEnterInput} onDragLeave={dragExitInput} onMouseEnter={mouseEnterInput} onMouseLeave={mouseExitInput}>
-              <InputImage imageChange={handleImageChange} handleDrop={handleDrop} inputData={inputData}/>
+
+        {imageData && <div className='main-middle-column'>
+          <div className='output-container'>
+            <OutputText ocr={ocr}/>
           </div>
         </div>}
-      </div>
-      {imageData && <div className='main-middle-column'>
-        <div className='output-container'>
-          <OutputText ocr={ocr}/>
 
+        {imageData && <div className='main-right-column'>
+            {imageData && <ImageDisplay imageData={imageData}/>}
+        </div>}
+
+        <div className='main-footer'>
+          {inputData.isProcessing ? <h5>{progress}%</h5> : undefined}
+          <h4 className="footer-text">{"Laura <3"}</h4>
+          {inputData.isProcessing ? <hr className='main-progress-line' style={{width: `${progress}%`}}/> : undefined}
         </div>
-      </div>}
-      {imageData && <div className='main-right-column'>
-          {imageData && <ImageDisplay imageData={imageData}/>}
-      </div>}
-      <div className='main-footer'>
-        {inputData.isProcessing ? <h5>{progress}%</h5> : undefined}
-        <h4 className="footer-text">{"Laura <3"}</h4>
-        {inputData.isProcessing ? <hr className='main-progress-line' style={{width: `${progress}%`}}/> : undefined}
-      </div>
-      {imageData ? undefined : <InfoComponent />}
-      <CSSTransition
+
+        {imageData ? undefined : <InfoComponent help={setHelp}/>}
+
+        {!inputData.isProcessing ? <CSSTransition
             in={isHelpShown}
             appear={true}
             timeout={300}
@@ -213,11 +213,11 @@ function App() {
             unmountOnExit
         >
           <HelpComponent color={themeData.currentColor}/>
-        </CSSTransition>
-    </main>
+        </CSSTransition> : undefined}
+
+      </main>
     </CSSTransition>
   );
-
 }
 
 export default App;

@@ -15,6 +15,10 @@
   font-display: swap;
 }
 
+#root{
+  display: flex;
+  justify-content: center;
+}
 
 body{
   background-color: #FFF6E6;
@@ -24,6 +28,13 @@ body{
   margin: 0;
   font-family: 'Libre Baskerville', serif;
   box-sizing: border-box;
+
+}
+
+a{
+  text-decoration: none;
+  color: #5CA9FA;
+  cursor: pointer;
 }
 
 h1, h4{
@@ -62,6 +73,7 @@ sub{
   position: relative;
   transition: 0.1s ease-out;
   overflow: hidden;
+  max-width: 2000px;
 }
 
 .main-grid-no-left-column{

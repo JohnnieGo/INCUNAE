@@ -1,6 +1,8 @@
 import React from "react";
 import * as quillToWord from "quill-to-word";
 import { saveAs } from "file-saver";
+import Select, { components } from "react-select";
+
 
 import { useState } from "react";
 import { Quill } from "react-quill";
@@ -32,7 +34,7 @@ const CustomRedo = () => (
 );
 
 
-const CorrectCharacters = () => <span>Zmień</span>;
+const CorrectCharacters = () => <span>Popraw tekst</span>;
 
 const ExportDoc = () => <span>Eksportuj</span>;
 
@@ -40,6 +42,7 @@ const ExportDoc = () => <span>Eksportuj</span>;
 function undoChange() {
   this.quill.history.undo();
 }
+
 function redoChange() {
   this.quill.history.redo();
 }
@@ -50,7 +53,7 @@ function intelligentCorrect() {
             .replaceAll("ſſ", "sz")
             .replaceAll("ſ", "s")
             .replaceAll("ꝛ", "r")
-            .replaceAll("ö"|"ö"|"ð"|"óͤ"|"óͤ"|"oͤ"|"òͤ"|"õ", "ó")
+            .replaceAll("ö"|"ö"|"ð"|"óͤ"|"óͤ"|"oͤ"|"òͤ"|"õ"|"ô", "ó")
             .replaceAll("ä"|"aͤ"|"ã"|"aͤ"|"à", "á")
             .replaceAll("ã", "á")
             .replaceAll("ß", "sz")
@@ -134,11 +137,12 @@ async function exportText() {
     exportAs: "blob"
   };
   const docAsBlob = await quillToWord.generateWord(delta, quillToWordConfig);
-  saveAs(docAsBlob, "word-export.docx");
+  saveAs(docAsBlob, "Transkrypcja.docx");
 }
 
 // Quill Toolbar component
 export const QuillToolbar = () => (
+  
   <div id="toolbar">
     <span className="ql-formats">
       <button className="ql-bold" />
@@ -154,13 +158,17 @@ export const QuillToolbar = () => (
       <button className="ql-redo">
         <CustomRedo />
       </button>
-      <button className="ql-intelligentCorrect">
+    </span>
+
+    <span className="ql-formats">
+      <button className="ql-intelligentCorrect" style={{width: "fit-content"}}>
         <CorrectCharacters />
       </button>
+    </span>
+    <span className="ql-formats">
       <button className="ql-exportText">
         <ExportDoc />
       </button>
-  
     </span>
   </div>
 );
