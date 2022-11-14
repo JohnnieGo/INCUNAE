@@ -135,7 +135,7 @@ function App() {
           console.log("Wysłano");
         })
         .catch((error) => {
-          console.error("Ups... Coś poszło nie tak.", error);
+          window.onerror = ("Ups... Coś poszło nie tak.", error);
         });
     }
   };
@@ -199,7 +199,7 @@ function App() {
 
         <div className='main-footer'>
           {inputData.isProcessing ? <h5>{progress}%</h5> : undefined}
-          <h4 className="footer-text">{"Laura <3"}</h4>
+          <h4 className="footer-text">{"Kraków 2022"}</h4>
           {inputData.isProcessing ? <hr className='main-progress-line' style={{width: `${progress}%`}}/> : undefined}
         </div>
 
