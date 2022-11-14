@@ -202,10 +202,24 @@ function App() {
           <h4 className="footer-text">{"Kraków 2022"}</h4>
           {inputData.isProcessing ? <hr className='main-progress-line' style={{width: `${progress}%`}}/> : undefined}
         </div>
+<<<<<<< HEAD
 
         {imageData ? undefined : <InfoComponent help={setHelp}/>}
 
         {!inputData.isProcessing ? <CSSTransition
+=======
+      </div>}
+      {imageData && <div className='main-right-column'>
+          {imageData && <ImageDisplay imageData={imageData}/>}
+      </div>}
+      <div className='main-footer'>
+        {inputData.isProcessing ? <h5>{progress}%</h5> : undefined}
+        <h4 className="footer-text">{"Kraków 2022"}</h4>
+        {inputData.isProcessing ? <hr className='main-progress-line' style={{width: `${progress}%`}}/> : undefined}
+      </div>
+      {imageData ? undefined : <InfoComponent />}
+      <CSSTransition
+>>>>>>> 734b00eee6232f5e261e1ecafb70aec84e2099b7
             in={isHelpShown}
             appear={true}
             timeout={300}
