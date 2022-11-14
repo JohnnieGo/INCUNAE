@@ -201,7 +201,7 @@ function App() {
       </div>}
       <div className='main-footer'>
         {inputData.isProcessing ? <h5>{progress}%</h5> : undefined}
-        <h4 className="footer-text">{"Laura <3"}</h4>
+        <h4 className="footer-text">{"Kraków 2022"}</h4>
         {inputData.isProcessing ? <hr className='main-progress-line' style={{width: `${progress}%`}}/> : undefined}
       </div>
       {imageData ? undefined : <InfoComponent />}
