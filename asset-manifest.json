@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/INCUNAE/static/css/main.f64ff639.css",
-    "main.js": "/INCUNAE/static/js/main.12931090.js",
-    "static/js/787.28cb0dcd.chunk.js": "/INCUNAE/static/js/787.28cb0dcd.chunk.js",
+    "main.js": "/INCUNAE/static/js/main.7dee3da6.js",
+    "static/js/787.7a67787d.chunk.js": "/INCUNAE/static/js/787.7a67787d.chunk.js",
     "static/media/DecoratedRomanInitials.woff": "/INCUNAE/static/media/DecoratedRomanInitials.3863c804606924093b32.woff",
     "static/media/DecoratedRomanInitials.woff2": "/INCUNAE/static/media/DecoratedRomanInitials.164d7c9a4a295b6bfe33.woff2",
     "index.html": "/INCUNAE/index.html",
     "main.f64ff639.css.map": "/INCUNAE/static/css/main.f64ff639.css.map",
-    "main.12931090.js.map": "/INCUNAE/static/js/main.12931090.js.map",
-    "787.28cb0dcd.chunk.js.map": "/INCUNAE/static/js/787.28cb0dcd.chunk.js.map"
+    "main.7dee3da6.js.map": "/INCUNAE/static/js/main.7dee3da6.js.map",
+    "787.7a67787d.chunk.js.map": "/INCUNAE/static/js/787.7a67787d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f64ff639.css",
-    "static/js/main.12931090.js"
+    "static/js/main.7dee3da6.js"
   ]
 }
