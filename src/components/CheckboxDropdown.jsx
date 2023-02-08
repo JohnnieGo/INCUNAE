@@ -13,7 +13,7 @@ const CheckboxMenu = React.forwardRef(
       className,
       "aria-labelledby": labeledBy,
       onSelectAll,
-      onSelectNone
+      onSelectNone,
     },
     ref
   ) => {
@@ -67,15 +67,15 @@ const CheckDropdownItem = React.forwardRef(
 
 export const CheckboxDropdown = observer(({ items }) => {
   const handleChecked = (key, event) => {
-    items.find(i => i.id === key).checked = event.target.checked;
+    items.find((i) => i.id === key).checked = event.target.checked;
   };
 
   const handleSelectAll = () => {
-    items.forEach(i => (i.checked = true));
+    items.forEach((i) => (i.checked = true));
   };
 
   const handleSelectNone = () => {
-    items.forEach(i => (i.checked = false));
+    items.forEach((i) => (i.checked = false));
   };
 
   return (
@@ -89,7 +89,7 @@ export const CheckboxDropdown = observer(({ items }) => {
         onSelectAll={handleSelectAll}
         onSelectNone={handleSelectNone}
       >
-        {items.map(i => (
+        {items.map((i) => (
           <Dropdown.Item
             key={i.id}
             as={CheckDropdownItem}

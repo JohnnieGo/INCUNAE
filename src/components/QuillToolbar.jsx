@@ -1,17 +1,8 @@
 import React from "react";
 import * as quillToWord from "quill-to-word";
 import { saveAs } from "file-saver";
-import Select, { components } from "react-select";
+import "../App";
 
-
-import { useState } from "react";
-import { Quill } from "react-quill";
-import '../App';
-
-
-// Custom Undo button icon component for Quill editor. You can import it directly
-// from 'quill/assets/icons/undo.svg' but I found that a number of loaders do not
-// handle them correctly
 const CustomUndo = () => (
   <svg viewBox="0 0 18 18">
     <polygon className="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10" />
@@ -22,7 +13,6 @@ const CustomUndo = () => (
   </svg>
 );
 
-// Redo button icon component for Quill editor
 const CustomRedo = () => (
   <svg viewBox="0 0 18 18">
     <polygon className="ql-fill ql-stroke" points="12 10 14 12 16 10 12 10" />
@@ -32,7 +22,6 @@ const CustomRedo = () => (
     />
   </svg>
 );
-
 
 const CorrectCharacters = () => <span>Popraw tekst</span>;
 
@@ -48,32 +37,33 @@ function redoChange() {
 }
 
 function intelligentCorrect() {
-        const toChange = this.quill.getContents().ops[0].insert
-            .replaceAll(" /" || "/", ",") 
-            .replaceAll("ſſ", "sz")
-            .replaceAll("ſ", "s")
-            .replaceAll("ꝛ", "r")
-            .replaceAll("ö"|"ö"|"ð"|"óͤ"|"óͤ"|"oͤ"|"òͤ"|"õ"|"ô", "ó")
-            .replaceAll("ä"|"aͤ"|"ã"|"aͤ"|"à", "á")
-            .replaceAll("ã", "á")
-            .replaceAll("ß", "sz")
-            .replaceAll("ü"|"ů", "u")
-            .replaceAll("V", "U")
-            .replaceAll("ʒ", "z")
-            .replaceAll("ẽ", "é")
-            .replaceAll("⸗", "-")
-            .replaceAll(" ᷣ", " ")
-            .replaceAll("ͤ", "")
-            .replaceAll("ff", "sz")
-            .replaceAll("ñ", "ń")
-            .replaceAll("ů", "u")
-            .replaceAll("v", "u")
-            .replaceAll("ssz", "sz")
-            .replaceAll("rzz", "rz")
-            .replaceAll("'", "")
-            .replaceAll("è", "ć")
+  const toChange = this.quill
+    .getContents()
+    .ops[0].insert.replaceAll(" /" || "/", ",")
+    .replaceAll("ſſ", "sz")
+    .replaceAll("ſ", "s")
+    .replaceAll("ꝛ", "r")
+    .replaceAll("ö" | "ö" | "ð" | "óͤ" | "óͤ" | "oͤ" | "òͤ" | "õ" | "ô", "ó")
+    .replaceAll("ä" | "aͤ" | "ã" | "aͤ" | "à", "á")
+    .replaceAll("ã", "á")
+    .replaceAll("ß", "sz")
+    .replaceAll("ü" | "ů", "u")
+    .replaceAll("V", "U")
+    .replaceAll("ʒ", "z")
+    .replaceAll("ẽ", "é")
+    .replaceAll("⸗", "-")
+    .replaceAll(" ᷣ", " ")
+    .replaceAll("ͤ", "")
+    .replaceAll("ff", "sz")
+    .replaceAll("ñ", "ń")
+    .replaceAll("ů", "u")
+    .replaceAll("v", "u")
+    .replaceAll("ssz", "sz")
+    .replaceAll("rzz", "rz")
+    .replaceAll("'", "")
+    .replaceAll("è", "ć");
 
-       this.quill.setContents([{insert: toChange}])
+  this.quill.setContents([{ insert: toChange }]);
 }
 // Add sizes to whitelist and register them
 // const Size = Quill.import("formats/size");
@@ -100,14 +90,14 @@ export const modules = {
       undo: undoChange,
       redo: redoChange,
       intelligentCorrect: intelligentCorrect,
-      exportText: exportText
-    }
+      exportText: exportText,
+    },
   },
   history: {
     delay: 500,
     maxStack: 100,
-    userOnly: true
-  }
+    userOnly: true,
+  },
 };
 
 // Formats objects for setting up the Quill editor
@@ -128,13 +118,13 @@ export const formats = [
   "link",
   "image",
   "color",
-  "code-block"
+  "code-block",
 ];
 
 async function exportText() {
   const delta = this.quill.getContents();
   const quillToWordConfig = {
-    exportAs: "blob"
+    exportAs: "blob",
   };
   const docAsBlob = await quillToWord.generateWord(delta, quillToWordConfig);
   saveAs(docAsBlob, "Transkrypcja.docx");
@@ -142,7 +132,6 @@ async function exportText() {
 
 // Quill Toolbar component
 export const QuillToolbar = () => (
-  
   <div id="toolbar">
     <span className="ql-formats">
       <button className="ql-bold" />
@@ -161,7 +150,10 @@ export const QuillToolbar = () => (
     </span>
 
     <span className="ql-formats">
-      <button className="ql-intelligentCorrect" style={{width: "fit-content"}}>
+      <button
+        className="ql-intelligentCorrect"
+        style={{ width: "fit-content" }}
+      >
         <CorrectCharacters />
       </button>
     </span>
