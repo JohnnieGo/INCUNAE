@@ -3,7 +3,7 @@ import "../App";
 export default function InfoComponent(props) {
   return (
     <div className="info-container">
-      <div className="text-width-limiter">
+      <div className="text-width-limiter" style={{maxWidth:"600px"}}>
         <h2>
           Incunae to program służący do automatycznego transliterowania dawnych
           tekstów.
