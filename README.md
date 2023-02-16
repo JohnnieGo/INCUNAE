@@ -4,4 +4,6 @@ INCUNAE is an application for transcribing old texts written in Fraktur and Schw
 
 It's a hobby project, not comparable to Transkribus and not as helpful, but if you have a moment, you can check it out <a href="https://johnniego.github.io/INCUNAE/" target="_blank">here</a>.
 
+Language: Polish
+
 If you want to read more about this and my other projects go to my <a href="https://janzaborowski.com" target="_blank">website</a>.
